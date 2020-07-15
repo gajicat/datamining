@@ -57,7 +57,7 @@ train_set_x = train_set_x_flatten/255.
 test_set_x = test_set_x_flatten/255.
 
 def sigmoid(z):
-    s = 1 / (1 + np.exp(-z)))
+    s = 1 / (1 + np.exp(-z))
     return s
 
 def initialize_with_zeros(dim):
@@ -97,7 +97,7 @@ def optimize(w,b,X,Y, num_iterations, learning_rate, print_cost = False):
     return params, costs
 
 def predict(w,b,X):
-    m = X.shape[0]
+    m = X.shape[1]
     Y_prediction = np.zeros((1,m))
     A = sigmoid(np.dot(w.T, X) + b)
     for i in range(A.shape[1]):
@@ -127,3 +127,16 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
          }
          
     return d
+	
+d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)
+
+index = 8
+plt.imshow(test_set_x[:,index].reshape((num_px,num_px, 3)))
+print("这张图标签"+str(test_set_y[0,index])+" 预测结果"+str(int(d["Y_prediction_test"][0,index])))
+
+costs = np.squeeze(d['costs'])
+plt.plot(costs)
+plt.ylabel('cost')
+plt.xlabel('iterations(per hundreds)')
+plt.title("learning rate =" + str(d["learning_rate"]))
+plt.show()
