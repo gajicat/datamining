@@ -140,3 +140,12 @@ plt.ylabel('cost')
 plt.xlabel('iterations(per hundreds)')
 plt.title("learning rate =" + str(d["learning_rate"]))
 plt.show()
+
+my_image = "my_image1.jpg"
+fname = "images/"+my_image
+image = np.array(plt.imread(fname))
+my_image = tf.resize(image, (num_px,num_px), mode='reflect').reshape((1, num_px*num_px*3)).T
+my_predicted_image = predict(d["w"],d["b"],my_image)
+
+plt.imshow(image)
+print("预测结果为 "+str(int(np.squeeze(my_predicted_image))))
